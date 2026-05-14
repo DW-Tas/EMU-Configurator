@@ -40,13 +40,16 @@ export function init() {
         loadStateFromSession();
     }
 
-    // 3. Build UI
+    // 3. Apply side effects (e.g., auto-settings based on other options)
+    applySideEffects();
+
+    // 4. Build UI
     generateUI();
 
-    // 4. Apply visibility / enable rules
+    // 5. Apply visibility / enable rules
     applyOptionRules();
 
-    // 5. Notify listeners for initial render
+    // 6. Notify listeners for initial render
     notifyListeners();
 }
 
@@ -347,6 +350,23 @@ function buildCheckbox(id, opt, wrap) {
     input.checked = !!state.config[id];
     input.addEventListener('change', () => {
         state.config[id] = input.checked;
+        
+        // Apply side effects for specific options
+        if (id === 'pcbIoBoard') {
+            // When I/O Board is selected, auto-set cable entry to I/O Board version
+            // When deselected, reset to default
+            state.config.cableEntry = input.checked ? 'io-board' : 'default';
+            
+            // Update the radio button UI to reflect the new cableEntry value
+            const radioGroup = document.querySelector('[data-config="cableEntry"]');
+            if (radioGroup) {
+                const allRadios = radioGroup.querySelectorAll('input[type="radio"]');
+                allRadios.forEach(radio => {
+                    radio.checked = (radio.value === state.config.cableEntry);
+                });
+            }
+        }
+        
         applyOptionRules();
         notifyListeners();
     });
@@ -442,6 +462,24 @@ function buildColorPicker(id, opt) {
     group.appendChild(label);
     group.appendChild(input);
     return group;
+}
+
+// ────────────────────────────────────────────────────────────────────
+//  Side effects  (automatic adjustments based on config state)
+// ────────────────────────────────────────────────────────────────────
+
+/**
+ * Apply automatic configuration adjustments based on interdependencies.
+ * E.g., when I/O Board is selected, automatically set cable entry to I/O Board version.
+ */
+function applySideEffects() {
+    // When I/O Board PCB is selected, auto-set cable entry to I/O Board version
+    // When deselected, reset to default cable entry
+    if (state.config.pcbIoBoard) {
+        state.config.cableEntry = 'io-board';
+    } else {
+        state.config.cableEntry = 'default';
+    }
 }
 
 // ────────────────────────────────────────────────────────────────────
