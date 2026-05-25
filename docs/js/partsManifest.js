@@ -536,7 +536,7 @@ export const partsManifest = {
         "cable-exit-outside-ioboard": {
             name: "Cable Entry — I/O Board Outside (Exit Side)",
             category: "Base",
-            externalUrl: "https://raw.githubusercontent.com/kashine6/EMU-IO-Board/main/STLS/%5Bm%5D_Cable%20Entry%20-%20IO%20Board%20OutSide.stl",
+            externalUrl: "https://raw.githubusercontent.com/kashine6/EMU-IO-Board/main/STLS/%5Bmm%5D_Cable%20Entry%20-%20IO%20Board%20OutSide.stl",
             qty: 1,
             colorCategory: "main",
             printProfile: "base",
