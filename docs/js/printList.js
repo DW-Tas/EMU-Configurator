@@ -155,6 +155,19 @@ function renderPrintProfiles(container, activeParts) {
     heading.textContent = 'Print Settings Reference';
     section.appendChild(heading);
 
+    // General printing notes (applies to all parts)
+    if (partsManifest.generalPrintingNotes?.length) {
+        const generalNotes = document.createElement('div');
+        generalNotes.className = 'print-general-notes';
+        for (const note of partsManifest.generalPrintingNotes) {
+            const noteItem = document.createElement('div');
+            noteItem.className = 'general-note-item';
+            noteItem.innerHTML = `<span class="note-icon">⚠️</span> ${note}`;
+            generalNotes.appendChild(noteItem);
+        }
+        section.appendChild(generalNotes);
+    }
+
     for (const pid of used) {
         const profile = partsManifest.printProfiles[pid];
         if (!profile) continue;

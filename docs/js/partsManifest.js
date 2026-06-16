@@ -62,6 +62,13 @@ export const partsManifest = {
     },
 
     // ══════════════════════════════════════════════════════════════════
+    //  GENERAL PRINTING NOTES (applies to all parts)
+    // ══════════════════════════════════════════════════════════════════
+    generalPrintingNotes: [
+        "Parts are NOT shrinkage-compensated — calibrate your filament first.",
+    ],
+
+    // ══════════════════════════════════════════════════════════════════
     //  PRINT PROFILES
     // ══════════════════════════════════════════════════════════════════
     printProfiles: {
@@ -81,7 +88,6 @@ export const partsManifest = {
                 zHop: "0.2 mm",
             },
             notes: [
-                "Parts are NOT shrinkage-compensated — calibrate your filament first.",
                 "Disable thick bridges — over-extrusion causes bearings/magnets not to fit.",
                 "Idler_Roller_Axle and Stepper_Tension_Arm: print with 999 walls for strength.",
             ],
